@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -27,6 +28,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -62,13 +64,24 @@ import com.example.donerkabab.ui.theme.RedDark
 fun HomeScreen(){
     Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxSize().background(
         BackgroundColor)) {
-        val foodItems= listOf( FoodData(R.drawable.pizza, "Pepper Pizza", "PIZZA", "15000"),
+        val foodGroups= listOf( Pair("Popular food",listOf( FoodData(R.drawable.pizza, "Pepper Pizza", "PIZZA", "15000"),
             FoodData(R.drawable.hot_dog, "Classic Burger", "BURGER", "12000"),
-            FoodData(R.drawable.lavash, "Chicken Lavash", "LAVASH", "10000"))
+            FoodData(R.drawable.lavash, "Chicken Lavash", "LAVASH", "10000"))),Pair("Burger Delights",listOf( FoodData(R.drawable.pizza, "Pepper Pizza", "PIZZA", "15000"),
+            FoodData(R.drawable.hot_dog, "Classic Burger", "BURGER", "12000"),
+            FoodData(R.drawable.lavash, "Chicken Lavash", "LAVASH", "10000"))),Pair("Lavash Specials",listOf( FoodData(R.drawable.pizza, "Pepper Pizza", "PIZZA", "15000"),
+            FoodData(R.drawable.hot_dog, "Classic Burger", "BURGER", "12000"),
+            FoodData(R.drawable.lavash, "Chicken Lavash", "LAVASH", "10000"))))
+
 
       SearchScreen()
         CategoriesRow()
-        FoodMain()
+
+      LazyColumn(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+          items(foodGroups){ (title,foodItems)->
+              FoodSection(foodData =foodItems, foodType = title)
+          }
+      }
+
 
        }
 
@@ -77,36 +90,19 @@ fun HomeScreen(){
 
 
 }
-@Composable
-fun FoodMain(){
-    val foodItems= listOf( FoodData(R.drawable.pizza, "Pepper Pizza", "PIZZA", "15000"),
-        FoodData(R.drawable.hot_dog, "Classic Burger", "BURGER", "12000"),
-        FoodData(R.drawable.lavash, "Chicken Lavash", "LAVASH", "10000"))
-
-    Column(modifier = Modifier.fillMaxSize()) {
-      Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth().padding(10.dp)) {
-    Text(
-        text = "Popular food",
-        color = BlackColor,
-        fontSize = 20.sp,
-        fontWeight = FontWeight.Bold)
-    Text(
-        text = "see all",
-        color = RedDark,
-        fontSize = 18.sp,
-    )
-}
-        FoodSection(foodData = foodItems)
-    }
-}
 
 
 @Composable
-fun FoodSection(foodData: List<FoodData>) {
-    LazyHorizontalGrid(
-        rows = GridCells.Fixed(1), // Adjust the number of ro),
-        verticalArrangement = Arrangement.spacedBy(10.dp)
-    ) {
+fun FoodSection(foodData: List<FoodData>,foodType:String) {
+    Column {
+        Text(
+            text = foodType,
+            color = BlackColor,
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+        )
+    LazyRow () {
         items(foodData) { food ->
             Column(modifier = Modifier.padding(10.dp)) {
 
@@ -118,6 +114,7 @@ fun FoodSection(foodData: List<FoodData>) {
                     price = food.price,
                 )
             }
+        }
         }
     }
 }
@@ -141,13 +138,15 @@ fun FoodItem(
                 .fillMaxWidth()
                 .padding( top = 8.dp, end = 8.dp)
         ) {
-            Icon(
-                painter = painterResource(R.drawable.favourite),
-                contentDescription = null,
-                modifier = Modifier
-                    .size(20.dp)
-                    .align(Alignment.TopEnd).clickable {  }, tint = RedColor
-            )
+
+                    Icon(
+                        imageVector = Icons.Default.FavoriteBorder,
+                        contentDescription = null,
+                        modifier = Modifier.clip(CircleShape)
+                            .size(20.dp)
+                            .align(Alignment.TopEnd).clickable { }, tint = RedColor
+                    )
+
             Image(
                 painter = image,
                 contentDescription = null,
@@ -174,11 +173,10 @@ fun FoodItem(
             )
             Text(
                 text = desc,
-                fontSize = 14.sp,
+                fontSize = 12.sp,
                 color = Color.Black,
                 textAlign = TextAlign.Start,
-                modifier = Modifier.padding(horizontal = 8.dp)
-            )
+                modifier = Modifier.padding(horizontal = 8.dp))
         }
 
 
@@ -286,7 +284,8 @@ fun SearchScreen() {
 }
 
 @Composable
-fun CategoriesRow() {
+fun CategoriesRow(onCategorySelected:(String)-> Unit ={}) {
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -294,13 +293,15 @@ fun CategoriesRow() {
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
         val categories = listOf("All", "Pizza", "Burger", "Lavash")
+        var selectedCategory by remember { mutableStateOf("All") }
         categories.forEach { category ->
             Button(
-                onClick = { /* Handle Category Click */ },
+                onClick = { selectedCategory=category
+                    onCategorySelected(category)},
                 shape = CircleShape,
-                colors = ButtonDefaults.buttonColors(containerColor = if (category == "All") Color.Red else Color.White)
+                colors = ButtonDefaults.buttonColors(containerColor = if (category == selectedCategory) Color.Red else Color.White)
             ) {
-                Text(text = category, color = if (category == "All") Color.White else Color.Black)
+                Text(text = category, color = if (category == selectedCategory) Color.White else Color.Black)
             }
         }
     }
