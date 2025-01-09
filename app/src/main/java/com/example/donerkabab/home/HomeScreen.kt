@@ -61,60 +61,80 @@ import com.example.donerkabab.ui.theme.RedColor
 import com.example.donerkabab.ui.theme.RedDark
 
 @Composable
-fun HomeScreen(){
-    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxSize().background(
-        BackgroundColor)) {
-        val foodGroups= listOf( Pair("Popular food",listOf( FoodData(R.drawable.pizza, "Pepper Pizza", "PIZZA", "15000"),
-            FoodData(R.drawable.hot_dog, "Classic Burger", "BURGER", "12000"),
-            FoodData(R.drawable.lavash, "Chicken Lavash", "LAVASH", "10000"))),Pair("Burger Delights",listOf( FoodData(R.drawable.pizza, "Pepper Pizza", "PIZZA", "15000"),
-            FoodData(R.drawable.hot_dog, "Classic Burger", "BURGER", "12000"),
-            FoodData(R.drawable.lavash, "Chicken Lavash", "LAVASH", "10000"))),Pair("Lavash Specials",listOf( FoodData(R.drawable.pizza, "Pepper Pizza", "PIZZA", "15000"),
-            FoodData(R.drawable.hot_dog, "Classic Burger", "BURGER", "12000"),
-            FoodData(R.drawable.lavash, "Chicken Lavash", "LAVASH", "10000"))))
+fun HomeScreen() {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .fillMaxSize()
+            .background(
+                BackgroundColor
+            )
+    ) {
+        val foodGroups = listOf(
+            Pair(
+                "Popular food", listOf(
+                    FoodData(R.drawable.pizza, "Pepper Pizza", "PIZZA", "15000"),
+                    FoodData(R.drawable.hot_dog, "Classic Burger", "BURGER", "12000"),
+                    FoodData(R.drawable.lavash, "Chicken Lavash", "LAVASH", "10000")
+                )
+            ), Pair(
+                "Burger Delights", listOf(
+                    FoodData(R.drawable.pizza, "Pepper Pizza", "PIZZA", "15000"),
+                    FoodData(R.drawable.hot_dog, "Classic Burger", "BURGER", "12000"),
+                    FoodData(R.drawable.lavash, "Chicken Lavash", "LAVASH", "10000")
+                )
+            ), Pair(
+                "Lavash Specials", listOf(
+                    FoodData(R.drawable.pizza, "Pepper Pizza", "PIZZA", "15000"),
+                    FoodData(R.drawable.hot_dog, "Classic Burger", "BURGER", "12000"),
+                    FoodData(R.drawable.lavash, "Chicken Lavash", "LAVASH", "10000")
+                )
+            )
+        )
 
 
-      SearchScreen()
+        SearchScreen()
         CategoriesRow()
 
-      LazyColumn(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-          items(foodGroups){ (title,foodItems)->
-              FoodSection(foodData =foodItems, foodType = title)
-          }
-      }
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            items(foodGroups) { (title, foodItems) ->
+                FoodSection(foodData = foodItems, foodType = title)
+            }
+        }
 
 
-       }
-
-
-
+    }
 
 
 }
 
 
 @Composable
-fun FoodSection(foodData: List<FoodData>,foodType:String) {
+fun FoodSection(foodData: List<FoodData>, foodType: String) {
     Column {
         Text(
             text = foodType,
-            color = BlackColor,
+            color = RedColor,
             fontSize = 20.sp,
-            fontWeight = FontWeight.Bold,
+            fontWeight = FontWeight.SemiBold,
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
         )
-    LazyRow () {
-        items(foodData) { food ->
-            Column(modifier = Modifier.padding(10.dp)) {
+        LazyRow {
+            items(foodData) { food ->
+                Column(modifier = Modifier.padding(10.dp)) {
 
 
-                FoodItem(
-                    title = food.title,
-                    image = painterResource(id = food.image),
-                    desc = food.desc,
-                    price = food.price,
-                )
+                    FoodItem(
+                        title = food.title,
+                        image = painterResource(id = food.image),
+                        desc = food.desc,
+                        price = food.price,
+                    )
+                }
             }
-        }
         }
     }
 }
@@ -130,22 +150,25 @@ fun FoodItem(
         modifier = Modifier
             .clip(RoundedCornerShape(10.dp))
             .background(Color.White)
-            .width(160.dp).clickable {  }
+            .width(160.dp)
+            .clickable { }
     ) {
         // Favorite icon at the end
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding( top = 8.dp, end = 8.dp)
+                .padding(top = 8.dp, end = 8.dp)
         ) {
 
-                    Icon(
-                        imageVector = Icons.Default.FavoriteBorder,
-                        contentDescription = null,
-                        modifier = Modifier.clip(CircleShape)
-                            .size(20.dp)
-                            .align(Alignment.TopEnd).clickable { }, tint = RedColor
-                    )
+            Icon(
+                imageVector = Icons.Default.FavoriteBorder,
+                contentDescription = null,
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .size(20.dp)
+                    .align(Alignment.TopEnd)
+                    .clickable { }, tint = RedColor
+            )
 
             Image(
                 painter = image,
@@ -176,9 +199,9 @@ fun FoodItem(
                 fontSize = 12.sp,
                 color = Color.Black,
                 textAlign = TextAlign.Start,
-                modifier = Modifier.padding(horizontal = 8.dp))
+                modifier = Modifier.padding(horizontal = 8.dp)
+            )
         }
-
 
 
         // Price and add button row with space between
@@ -206,25 +229,25 @@ fun FoodItem(
 
             // Plus icon
             Box(
-                modifier = Modifier.clickable {  }
+                modifier = Modifier
+                    .clickable { }
                     .size(20.dp) // Size of the background box
                     .clip(RoundedCornerShape(4.dp)) // Rounded corners
                     .background(RedColor), // Background color
                 contentAlignment = Alignment.Center // Center the icon inside the box
             ) {
-            Icon(
-               imageVector = Icons.Default.Add,
-                contentDescription = null,
-                modifier = Modifier.size(20.dp).background(RedColor), tint = Color.White
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(20.dp)
+                        .background(RedColor), tint = Color.White
 
-            )
-        }}
+                )
+            }
+        }
     }
 }
-
-
-
-
 
 
 @Composable
@@ -272,7 +295,9 @@ fun SearchScreen() {
         Spacer(modifier = Modifier.width(16.dp))
         IconButton(
             onClick = { /*TODO: Implement Filter*/ },
-            modifier = Modifier.background(RedColor, shape = CircleShape).size(40.dp)
+            modifier = Modifier
+                .background(RedColor, shape = CircleShape)
+                .size(40.dp)
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.settings),
@@ -284,7 +309,7 @@ fun SearchScreen() {
 }
 
 @Composable
-fun CategoriesRow(onCategorySelected:(String)-> Unit ={}) {
+fun CategoriesRow(onCategorySelected: (String) -> Unit = {}) {
 
     Row(
         modifier = Modifier
@@ -296,19 +321,26 @@ fun CategoriesRow(onCategorySelected:(String)-> Unit ={}) {
         var selectedCategory by remember { mutableStateOf("All") }
         categories.forEach { category ->
             Button(
-                onClick = { selectedCategory=category
-                    onCategorySelected(category)},
+                onClick = {
+                    selectedCategory = category
+                    onCategorySelected(category)
+                },
                 shape = CircleShape,
                 colors = ButtonDefaults.buttonColors(containerColor = if (category == selectedCategory) Color.Red else Color.White)
             ) {
-                Text(text = category, color = if (category == selectedCategory) Color.White else Color.Black)
+                Text(
+                    text = category,
+                    color = if (category == selectedCategory) Color.White else Color.Black
+                )
             }
+            
         }
     }
 }
+
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun HomePreview(){
+fun HomePreview() {
     DonerKababTheme {
         HomeScreen()
     }
