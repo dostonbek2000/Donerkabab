@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Doner kabab</string>
+    <string name="title_activity_cart_screen">CartScreen</string>
 </resources>
