@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.example.donerkabab.cart.CartScreen
 import com.example.donerkabab.favourites.FavouriteScreen
+import com.example.donerkabab.orders.OrdersScreen
 import com.example.donerkabab.ui.theme.DonerKababTheme
 
 
@@ -26,7 +27,12 @@ class MainActivity : ComponentActivity() {
                     Column(modifier = Modifier.fillMaxSize().padding(padding), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
                         //HomeScreen()
                         //FavouriteScreen()
-                    CartScreen()}
+                    //CartScreen()
+                    OrdersScreen()
+
+
+
+                    }
                 }
 
             }
