@@ -1,6 +1,5 @@
 package com.example.donerkabab.ui.theme
 
-import android.text.style.BackgroundColorSpan
 import androidx.compose.ui.graphics.Color
 
 val Purple80 = Color(0xFFD0BCFF)
@@ -13,5 +12,5 @@ val Pink40 = Color(0xFF7D5260)
 val RedColor=Color(0xffff0000)
 val RedDark=Color(0xFF4d0000)
 val BackgroundColor=Color(0xFFe2e2e2)
+val TextColor=Color(0xFF8D8D8D)
 val BlackColor=Color(0xFF000000)
-val BlackHeavy=Color(0xFFc0c0c0)

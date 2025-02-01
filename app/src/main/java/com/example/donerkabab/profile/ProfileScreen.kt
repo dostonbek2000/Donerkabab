@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -24,7 +23,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -41,11 +39,11 @@ fun ProfileScreen(){
     Column(verticalArrangement = Arrangement.Top, horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxSize().background(
         BackgroundColor)) {
 Spacer(modifier = Modifier.height(40.dp))
-        Box(contentAlignment = Alignment.Center, modifier = Modifier.background(shape = CircleShape, color = RedColor).size(160.dp).border(width = 6.dp, color = Color.Black, shape = CircleShape)) {
+        Box(contentAlignment = Alignment.Center, modifier = Modifier.background(shape = CircleShape, color = RedColor).clip(shape = CircleShape).size(160.dp).border(width = 6.dp, color = Color.Black, shape = CircleShape)) {
 
 
             Image(
-                painter = painterResource(R.drawable.pizza),
+                painter = painterResource(R.drawable.img),
                 contentDescription = null,
                 modifier = Modifier.padding(2.dp)
             )
@@ -61,7 +59,7 @@ Spacer(modifier = Modifier.height(40.dp))
                 fontSize = 16.sp,
                 modifier = Modifier
                     .align(Alignment.TopStart)
-                    .offset(y = (-9).dp, x = 10.dp) // Adjust to position text over the border
+                    .offset(y = (-10).dp, x = 10.dp) // Adjust to position text over the border
                     .background(BackgroundColor) // Optional: Adds background to separate from border
                     .padding(horizontal = 4.dp) // Padding for better appearance
             )
@@ -76,7 +74,7 @@ Spacer(modifier = Modifier.height(40.dp))
                 fontSize = 16.sp,
                 modifier = Modifier
                     .align(Alignment.TopStart)
-                    .offset(y = (-9).dp, x = 10.dp) // Adjust to position text over the border
+                    .offset(y = (-10).dp, x = 10.dp) // Adjust to position text over the border
                     .background(BackgroundColor) // Optional: Adds background to separate from border
                     .padding(horizontal = 4.dp) // Padding for better appearance
             )
@@ -91,7 +89,7 @@ Spacer(modifier = Modifier.height(40.dp))
                 fontSize = 16.sp,
                 modifier = Modifier
                     .align(Alignment.TopStart)
-                    .offset(y = (-9).dp, x = 10.dp) // Adjust to position text over the border
+                    .offset(y = (-10).dp, x = 10.dp) // Adjust to position text over the border
                     .background(BackgroundColor) // Optional: Adds background to separate from border
                     .padding(horizontal = 4.dp) // Padding for better appearance
             )
@@ -107,9 +105,9 @@ Spacer(modifier = Modifier.height(40.dp))
                 fontSize = 16.sp,
                 modifier = Modifier
                     .align(Alignment.TopStart)
-                    .offset(y = (-9).dp, x = 10.dp) // Adjust to position text over the border
-                    .background(BackgroundColor) // Optional: Adds background to separate from border
-                    .padding(horizontal = 4.dp) // Padding for better appearance
+                    .offset(y = (-10).dp, x = 10.dp)
+                    .background(BackgroundColor)
+                    .padding(horizontal = 4.dp)
             )
             Text(textAlign = TextAlign.Start, text = "10/10/2007",color = RedDark, modifier = Modifier.padding(horizontal = 10.dp, vertical = 10.dp), fontSize = 22.sp)
         }

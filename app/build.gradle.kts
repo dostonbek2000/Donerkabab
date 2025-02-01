@@ -60,4 +60,16 @@ dependencies {
     implementation (libs.androidx.material)
     implementation (libs.material3)
 
+
+    implementation(libs.lottie.compose)
+    implementation (libs.kotlinx.coroutines.android)
+    implementation (libs.androidx.navigation.compose.v272)
+
+    implementation (libs.material3)
+    implementation (libs.androidx.navigation.compose.vlatestversion)
+    implementation (libs.accompanist.pager.v02413rc)
+
+
+
+
 }
