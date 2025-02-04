@@ -16,6 +16,7 @@ import com.example.donerkabab.favourites.FavouriteScreen
 import com.example.donerkabab.onBoarding.OnBoardingScreen
 import com.example.donerkabab.orders.OrdersScreen
 import com.example.donerkabab.registration.RegisterScreen
+import com.example.donerkabab.registration.UserViewModel
 import com.example.donerkabab.registration.VerifyScreen
 import com.example.donerkabab.ui.theme.DonerKababTheme
 
@@ -34,9 +35,18 @@ class MainActivity : ComponentActivity() {
                     //OrdersScreen()
                      //   OnBoardingScreen(onFinish = {})
                        // VerifyScreen(password = "", verificationId = ""){}
-                        RegisterScreen()
+                        RegisterScreen(
 
 
+                            viewModel = UserViewModel()
+                        )
+
+/*action:create
+name:Dostonbek
+surname:Husanov
+tel:+998910446710
+codeA:666666
+codeB:777777*/
 
 
                     }

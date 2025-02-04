@@ -21,6 +21,7 @@ accompanistPagerVersion = "0.24.13-rc"
 
 androidxNavigationCompose = "<latest-version>"
 navigationComposeVersion = "2.7.2"
+volley = "1.2.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -48,6 +49,7 @@ androidx-navigation-compose-v272 = { module = "androidx.navigation:navigation-co
 androidx-navigation-compose-vlatestversion = { module = "androidx.navigation:navigation-compose", version.ref = "androidxNavigationCompose" }
 
 accompanist-pager-v02413rc = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanistPagerVersion" }
+volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "673287267404",
+    "project_id": "donercabab",
+    "storage_bucket": "donercabab.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:673287267404:android:b17d81f8bf9c5e8daf80e9",
+        "android_client_info": {
+          "package_name": "com.example.donerkabab"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGf8VizNCOhOEvP5sn7qOb3RmvCQD2hXo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
