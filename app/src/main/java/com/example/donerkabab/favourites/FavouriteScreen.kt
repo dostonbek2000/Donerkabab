@@ -45,6 +45,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.donerkabab.R
 import com.example.donerkabab.home.FoodData
 import com.example.donerkabab.home.FoodItem
@@ -53,7 +55,7 @@ import com.example.donerkabab.ui.theme.DonerKababTheme
 import com.example.donerkabab.ui.theme.RedColor
 
 @Composable
-fun FavouriteScreen() {
+fun FavouriteScreen(navController: NavController) {
     val foodItems =
         listOf(
             FoodData(R.drawable.pizza, "Pepper Pizza", "PIZZA", "15000"),
@@ -264,6 +266,7 @@ fun FavouriteSearch() {
 @Composable
 fun FavouritePreview() {
     DonerKababTheme {
-        FavouriteScreen()
+        val navController= rememberNavController()
+        FavouriteScreen(navController)
     }
 }

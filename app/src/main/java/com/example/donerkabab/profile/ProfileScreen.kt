@@ -27,6 +27,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.donerkabab.R
 import com.example.donerkabab.ui.theme.BackgroundColor
 import com.example.donerkabab.ui.theme.BlackColor
@@ -34,7 +36,7 @@ import com.example.donerkabab.ui.theme.RedColor
 import com.example.donerkabab.ui.theme.RedDark
 
 @Composable
-fun ProfileScreen(){
+fun ProfileScreen(navController: NavController){
 
     Column(verticalArrangement = Arrangement.Top, horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxSize().background(
         BackgroundColor)) {
@@ -117,5 +119,5 @@ Spacer(modifier = Modifier.height(40.dp))
 @Preview(showBackground = true)
 @Composable
 fun ProfilePreview(){
-    ProfileScreen()
+    ProfileScreen(navController = rememberNavController())
 }

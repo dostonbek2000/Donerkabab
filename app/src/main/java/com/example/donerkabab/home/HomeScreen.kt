@@ -53,6 +53,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.donerkabab.R
 import com.example.donerkabab.ui.theme.BackgroundColor
 import com.example.donerkabab.ui.theme.BlackColor
@@ -61,7 +63,7 @@ import com.example.donerkabab.ui.theme.RedColor
 import com.example.donerkabab.ui.theme.RedDark
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(navController: NavController) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -342,6 +344,7 @@ fun CategoriesRow(onCategorySelected: (String) -> Unit = {}) {
 @Composable
 fun HomePreview() {
     DonerKababTheme {
-        HomeScreen()
+        val navController= rememberNavController()
+        HomeScreen(navController)
     }
 }

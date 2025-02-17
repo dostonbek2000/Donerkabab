@@ -40,6 +40,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.donerkabab.ui.theme.BackgroundColor
 import com.example.donerkabab.ui.theme.RedColor
 import com.example.donerkabab.ui.theme.TextColor
@@ -48,7 +50,7 @@ import com.google.accompanist.pager.HorizontalPager
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun OnBoardingScreen(onFinish: () -> Unit) {
+fun OnBoardingScreen(onFinish: () -> Unit,navController: NavController) {
     val pagerState = com.google.accompanist.pager.rememberPagerState(initialPage = 0)
     val (selectedPage, setSelectedPage) = remember { mutableIntStateOf(0) }
 
@@ -160,5 +162,5 @@ Spacer(modifier = Modifier.height(70.dp))
 @Preview(showBackground = true)
 @Composable
 fun PreviewOnBoardingScreen() {
-    OnBoardingScreen(onFinish = {})
+    OnBoardingScreen(onFinish = {}, navController = rememberNavController())
 }

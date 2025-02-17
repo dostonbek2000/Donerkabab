@@ -1,5 +1,6 @@
 package com.example.donerkabab.registration
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -19,6 +20,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -32,16 +34,44 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.donerkabab.ui.theme.BackgroundColor
 import com.example.donerkabab.ui.theme.RedColor
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import org.json.JSONObject
+import java.io.IOException
 
 @Composable
-fun VerifyScreen(
+fun VerifyScreen(phoneNumber: String,
     password: String,
     verificationId: String,
-    onLoginSuccess: () -> Unit
+    onLoginSuccess: () -> Unit,
+    navController:NavController
 ) {
     val code = remember { mutableStateOf("") }
+    val generatedCode = remember { mutableStateOf("") }
+    LaunchedEffect(Unit) {
+        val scriptUrl = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec?action=getCode&phone_number=$phoneNumber"
+
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response = getUser(scriptUrl)
+                val jsonResponse = JSONObject(response)
+                generatedCode.value = jsonResponse.getString("code")
+
+                withContext(Dispatchers.Main) {
+
+                }
+            } catch (e: Exception) {
+                Log.e("VerifyScreen", "Error: ${e.message}")
+            }
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -131,7 +161,12 @@ fun VerifyScreen(
         )
         Spacer(modifier = Modifier.size(30.dp))
         Button(
-            onClick = {},
+            onClick = {  if (code.value == generatedCode.value) {
+                navController.navigate("homeScreen")
+            } else {
+
+                Log.e("VerifyScreen", "Code did not match")
+            }},
             colors = ButtonDefaults.buttonColors(
                 RedColor
             ),
@@ -142,9 +177,15 @@ fun VerifyScreen(
         Spacer(modifier = Modifier.weight(2f))
     }
 }
-@Preview
-@Composable
-fun DefaultPreview(){
-    VerifyScreen(password = "", verificationId = ""){}
 
+suspend fun getUser(url: String): String {
+    return withContext(Dispatchers.IO) {
+        val client = OkHttpClient()
+        val request = Request.Builder().url(url).get().build()
+
+        client.newCall(request).execute().use { response ->
+            if (!response.isSuccessful) throw IOException("Unexpected response: $response")
+            response.body?.string() ?: ""
+        }
+    }
 }

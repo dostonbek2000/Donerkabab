@@ -45,6 +45,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.times
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.donerkabab.R
 import com.example.donerkabab.ui.theme.BackgroundColor
 import com.example.donerkabab.ui.theme.DonerKababTheme
@@ -52,7 +54,7 @@ import com.example.donerkabab.ui.theme.RedColor
 import kotlin.time.times
 
 @Composable
-fun CartScreen() {
+fun CartScreen(navController: NavController) {
 
     val cartItems = remember { mutableStateMapOf<Int, Int>() } // id to quantity mapping
     val priceItems= remember { mutableStateMapOf<Int,Int>() }
@@ -277,6 +279,6 @@ fun FoodCartItem(
 @Composable
 fun FoodCartPreview() {
     DonerKababTheme {
-        CartScreen()
+        CartScreen(navController = rememberNavController())
     }
 }

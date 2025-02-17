@@ -42,6 +42,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.donerkabab.R
 import com.example.donerkabab.favourites.FavouriteFoodItem
 import com.example.donerkabab.favourites.FavouriteFoodSection
@@ -51,7 +52,7 @@ import com.example.donerkabab.ui.theme.BackgroundColor
 import com.example.donerkabab.ui.theme.RedColor
 
 @Composable
-fun OrdersScreen(){
+fun OrdersScreen(navController: NavController){
     val foodItems =
         listOf(
             FoodData(R.drawable.pizza, "Pepper Pizza", "PIZZA", "15000"),

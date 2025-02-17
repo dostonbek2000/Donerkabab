@@ -11,8 +11,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.donerkabab.cart.CartScreen
 import com.example.donerkabab.favourites.FavouriteScreen
+import com.example.donerkabab.navigation.MainNav
 import com.example.donerkabab.onBoarding.OnBoardingScreen
 import com.example.donerkabab.orders.OrdersScreen
 import com.example.donerkabab.registration.RegisterScreen
@@ -27,29 +31,13 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             DonerKababTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { padding->
-                    Column(modifier = Modifier.fillMaxSize().padding(padding), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
-                        //HomeScreen()
-                        //FavouriteScreen()
-                    //CartScreen()
-                    //OrdersScreen()
-                     //   OnBoardingScreen(onFinish = {})
-                       // VerifyScreen(password = "", verificationId = ""){}
-                        RegisterScreen(
+
+                    Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+
+                        val navController = rememberNavController()
+                  MainNav()
 
 
-                            viewModel = UserViewModel()
-                        )
-
-/*action:create
-name:Dostonbek
-surname:Husanov
-tel:+998910446710
-codeA:666666
-codeB:777777*/
-
-
-                    }
                 }
 
             }

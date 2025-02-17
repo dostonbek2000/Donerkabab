@@ -71,6 +71,11 @@ dependencies {
     implementation (libs.androidx.navigation.compose.vlatestversion)
     implementation (libs.accompanist.pager.v02413rc)
 
+    implementation (libs.androidx.hilt.navigation.compose)
+    implementation (libs.hilt.android)
+
+    implementation (libs.okhttp)
+    implementation (libs.gson) // For JSON parsing
 
 
 
