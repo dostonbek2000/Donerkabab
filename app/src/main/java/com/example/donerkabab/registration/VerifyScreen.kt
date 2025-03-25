@@ -21,8 +21,10 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -47,31 +49,9 @@ import org.json.JSONObject
 import java.io.IOException
 
 @Composable
-fun VerifyScreen(phoneNumber: String,
-    password: String,
-    verificationId: String,
-    onLoginSuccess: () -> Unit,
-    navController:NavController
-) {
-    val code = remember { mutableStateOf("") }
-    val generatedCode = remember { mutableStateOf("") }
-    LaunchedEffect(Unit) {
-        val scriptUrl = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec?action=getCode&phone_number=$phoneNumber"
-
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val response = getUser(scriptUrl)
-                val jsonResponse = JSONObject(response)
-                generatedCode.value = jsonResponse.getString("code")
-
-                withContext(Dispatchers.Main) {
-
-                }
-            } catch (e: Exception) {
-                Log.e("VerifyScreen", "Error: ${e.message}")
-            }
-        }
-    }
+fun VerifyScreen(navController: NavController, phone: String, verificationId: String,viewModel: UserViewModel,onFinish:() ->Unit) {
+    var code by remember { mutableStateOf("") }
+    var errorMessage by remember { mutableStateOf<String?>(null) }
 
     Column(
         modifier = Modifier
@@ -95,11 +75,12 @@ fun VerifyScreen(phoneNumber: String,
             textAlign = TextAlign.Center
         )
         Spacer(modifier = Modifier.size(50.dp))
+
         BasicTextField(
-            value = code.value,
+            value = code,
             onValueChange = {
                 if (it.length <= 6) {
-                    code.value = it
+                    code = it
                 }
             },
             decorationBox = {
@@ -108,26 +89,15 @@ fun VerifyScreen(phoneNumber: String,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     repeat(6) { index ->
-                        val char = when {
-                            index >= code.value.length -> ""
-                            else -> code.value[index].toString()
-                        }
-                        val isFocused = code.value.length == index
+                        val char = if (index < code.length) code[index].toString() else ""
+                        val isFocused = code.length == index
                         Box(
                             modifier = Modifier
                                 .width(40.dp)
                                 .height(50.dp)
                                 .border(
-                                    width = if (isFocused) {
-                                        2.dp
-                                    } else {
-                                        1.dp
-                                    },
-                                    color = if (isFocused) {
-                                        Color.Black
-                                    } else {
-                                        Color.Gray
-                                    },
+                                    width = if (isFocused) 2.dp else 1.dp,
+                                    color = if (isFocused) Color.Black else Color.Gray,
                                     shape = RoundedCornerShape(8.dp)
                                 ),
                             contentAlignment = Alignment.Center
@@ -137,13 +107,8 @@ fun VerifyScreen(phoneNumber: String,
                                 style = TextStyle(
                                     fontSize = 20.sp,
                                     fontWeight = FontWeight.Bold,
-                                    color = if (isFocused) {
-                                        Color.Black
-                                    } else {
-                                        Color.Black
-                                    }
+                                    color = Color.Black
                                 ),
-                                color = Color.Black,
                                 textAlign = TextAlign.Center
                             )
                         }
@@ -152,40 +117,49 @@ fun VerifyScreen(phoneNumber: String,
                 }
             },
             maxLines = 1,
-            keyboardOptions = KeyboardOptions.Default
-                .copy(
-                    keyboardType = KeyboardType.Number,
-                    imeAction = ImeAction.Done
-                ),
+            keyboardOptions = KeyboardOptions.Default.copy(
+                keyboardType = KeyboardType.Number,
+                imeAction = ImeAction.Done
+            ),
             singleLine = true
         )
         Spacer(modifier = Modifier.size(30.dp))
-        Button(
-            onClick = {  if (code.value == generatedCode.value) {
-                navController.navigate("homeScreen")
-            } else {
 
-                Log.e("VerifyScreen", "Code did not match")
-            }},
-            colors = ButtonDefaults.buttonColors(
-                RedColor
-            ),
-            enabled = code.value.length == 6
+        Button(
+            onClick = {
+                if (code.isNotEmpty()) {
+                    if (phone.startsWith("+998") ) phone.removePrefix("+998")
+                    viewModel.verifyUser(phone, code) { success, message ->
+                        if (success) {
+                            navController.navigate("main") {
+                                popUpTo("verify/{phone}/{verificationId}") { inclusive = true }
+                                popUpTo("register") { inclusive = true }
+                            }
+                        onFinish()// Move to HomeScreen
+                        } else {
+                            errorMessage = message
+                        }
+                    }
+                } else {
+                    errorMessage = "Please enter the verification code"
+                }
+            },
+            colors = ButtonDefaults.buttonColors(RedColor),
+            enabled = code.length == 6
         ) {
             Text(text = "Login")
         }
-        Spacer(modifier = Modifier.weight(2f))
-    }
-}
 
-suspend fun getUser(url: String): String {
-    return withContext(Dispatchers.IO) {
-        val client = OkHttpClient()
-        val request = Request.Builder().url(url).get().build()
-
-        client.newCall(request).execute().use { response ->
-            if (!response.isSuccessful) throw IOException("Unexpected response: $response")
-            response.body?.string() ?: ""
+        errorMessage?.let {
+            Spacer(modifier = Modifier.size(10.dp))
+            Text(
+                text = it,
+                color = Color.Red,
+                fontSize = 14.sp,
+                textAlign = TextAlign.Center
+            )
         }
+
+        Spacer(modifier = Modifier.weight(2f))
     }
 }

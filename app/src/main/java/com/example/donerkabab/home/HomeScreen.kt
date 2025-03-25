@@ -96,12 +96,14 @@ fun HomeScreen(navController: NavController) {
 
 
         SearchScreen()
-        CategoriesRow()
+
+        CategoriesGrid()
 
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
+
             items(foodGroups) { (title, foodItems) ->
                 FoodSection(foodData = foodItems, foodType = title)
             }
@@ -259,7 +261,7 @@ fun SearchScreen() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(horizontal = 16.dp, vertical = 10.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         BasicTextField(
@@ -311,31 +313,33 @@ fun SearchScreen() {
 }
 
 @Composable
-fun CategoriesRow(onCategorySelected: (String) -> Unit = {}) {
+fun CategoriesGrid(onCategorySelected: (String) -> Unit = {}) {
+    val categories = listOf("Hammasi", "Pitsa", "Burger", "Lavash")
+    var selectedCategory by remember { mutableStateOf("Hammasi") }
 
-    Row(
+    LazyHorizontalGrid(
+        rows = GridCells.Fixed(1), // Ensures a single row
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 16.dp, end = 16.dp),
-        horizontalArrangement = Arrangement.SpaceEvenly
+            .height(50.dp)
+            .padding()
+
     ) {
-        val categories = listOf("All", "Pizza", "Burger", "Lavash")
-        var selectedCategory by remember { mutableStateOf("All") }
-        categories.forEach { category ->
+        items(categories) { category ->
             Button(
                 onClick = {
                     selectedCategory = category
                     onCategorySelected(category)
                 },
                 shape = CircleShape,
-                colors = ButtonDefaults.buttonColors(containerColor = if (category == selectedCategory) Color.Red else Color.White)
+                colors = ButtonDefaults.buttonColors(containerColor = if (category == selectedCategory) Color.Red else Color.White),
+                modifier = Modifier.padding(4.dp)
             ) {
                 Text(
                     text = category,
                     color = if (category == selectedCategory) Color.White else Color.Black
                 )
             }
-            
         }
     }
 }

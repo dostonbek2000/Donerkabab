@@ -50,7 +50,7 @@ import com.google.accompanist.pager.HorizontalPager
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun OnBoardingScreen(onFinish: () -> Unit,navController: NavController) {
+fun OnBoardingScreen(navController: NavController) {
     val pagerState = com.google.accompanist.pager.rememberPagerState(initialPage = 0)
     val (selectedPage, setSelectedPage) = remember { mutableIntStateOf(0) }
 
@@ -134,7 +134,7 @@ Spacer(modifier = Modifier.height(70.dp))
         Button(
             onClick = {
                 if (selectedPage == listData.size - 1) {
-                    onFinish() // Corrected from `onFinish` to `onFinish()`
+                    navController.navigate("register") // Corrected from `onFinish` to `onFinish()`
                 } else {
                     scope.launch {
                         pagerState.animateScrollToPage(selectedPage + 1)
@@ -152,15 +152,9 @@ Spacer(modifier = Modifier.height(70.dp))
             )
         ) {
             Text(
-                text ="Next",
+                text ="Davom etish",
                 color = Color.White, fontSize = 20.sp
             )
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewOnBoardingScreen() {
-    OnBoardingScreen(onFinish = {}, navController = rememberNavController())
 }

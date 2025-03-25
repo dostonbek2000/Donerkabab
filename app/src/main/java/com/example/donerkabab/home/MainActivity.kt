@@ -16,9 +16,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.donerkabab.cart.CartScreen
 import com.example.donerkabab.favourites.FavouriteScreen
+import com.example.donerkabab.navigation.FirstNav
 import com.example.donerkabab.navigation.MainNav
 import com.example.donerkabab.onBoarding.OnBoardingScreen
 import com.example.donerkabab.orders.OrdersScreen
+import com.example.donerkabab.registration.LoginScreen
 import com.example.donerkabab.registration.RegisterScreen
 import com.example.donerkabab.registration.UserViewModel
 import com.example.donerkabab.registration.VerifyScreen
@@ -31,11 +33,12 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             DonerKababTheme {
+                val navController= rememberNavController()
 
                     Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
 
-                        val navController = rememberNavController()
-                  MainNav()
+
+                 FirstNav(context = applicationContext)
 
 
                 }

@@ -52,6 +52,9 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.espresso.core)
     implementation(libs.volley)
+    implementation(libs.androidx.animation.core.lint)
+    implementation(libs.androidx.runtime.livedata)
+    implementation(libs.androidx.tools.core)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -74,6 +77,7 @@ dependencies {
     implementation (libs.androidx.hilt.navigation.compose)
     implementation (libs.hilt.android)
 
+    implementation (libs.androidx.lifecycle.viewmodel.ktx)
     implementation (libs.okhttp)
     implementation (libs.gson) // For JSON parsing
 
